@@ -1,0 +1,31 @@
+{# need to specify which form, the action url, #}
+<div class="form" style="margin-top: 10px">
+    {% for error in form.non_field_errors %}
+        <div class="error">
+            {{ error }}
+        </div>
+    {% endfor %}
+
+    <form class="form-horizontal" method="post" action="{% url action_url param %}" enctype="multipart/form-data">
+        {% for field in form %}
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{ field.label }}</label>
+
+                <div class="col-sm-5">
+                    {{ field }}
+                </div>
+                <div class="col-sm-5 error">{{ field.errors }}</div>
+            </div>
+        {% endfor %}
+
+        <!-- submit button -->
+        <div class="form-group">
+            <label class="control-label col-sm-2"></label>
+
+            <div class="col-sm-5">
+                <input class="btn btn-success" type="submit" value="Save">
+            </div>
+        </div>
+        {% csrf_token %}
+    </form>
+</div>

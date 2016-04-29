@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block section %}
+    <div class="container">
+        <div class="add">
+            <h1>Add new Items</h1>
+            <ul class='nav nav-tabs'>
+                <li class='active'><a data-toggle='tab' href='#add-patent'>Add Patent</a></li>
+                <li><a data-toggle='tab' href='#add-insight'>Add Insight</a></li>
+            </ul>
+
+            <div class='tab-content'>
+                <div id='add-patent' class='tab-pane fade in active'>
+                    {% include 'add_forms.html' with form=patent_form action_url='add_patent' %}
+                </div>
+                <div id='add-insight' class='tab-pane fade'>
+                    {% include 'add_forms.html' with form=insight_form action_url='add_insight' %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block section %}
+    <div class="container">
+        <div class="home">
+            <div class="overflow">
+                <div class="form col-md-6">
+                    <form role="form" id="patent-search-form" action="{% url 'search_patent' %}" method="get">
+                        <label>Search Patent by Keyword
+                            <input name="keyword">
+                        </label>
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </form>
+                </div>
+
+                <div class="form col-md-6">
+                    <form role="form" id="insight-search-form" action="{% url 'search_insight' %}" method="get">
+                        <label>Search Insight by Keyword
+                            <input name="keyword">
+                        </label>
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </form>
+                </div>
+            </div>
+            <div class="small-container">
+                <ul class='nav nav-tabs'>
+                    <li class='active'><a data-toggle='tab' href='#patent'>Patent</a></li>
+                    <li><a data-toggle='tab' href='#insight'>Insight</a></li>
+                </ul>
+
+                <div class='tab-content'>
+                    <div id='patent' class='tab-pane fade in active'>
+                        {% for patent in patents %}
+                            <div class="single-patent">
+                                <div class="applicant">{{ patent.applicant_name }}</div>
+                                <ol class="">
+                                    <li>Application Number: {{ patent.application_number }}</li>
+                                    <li>Date of Filing: {{ patent.filing_date }}</li>
+                                    <li>Title of Invention: {{ patent.title_of_invention }}</li>
+                                    <li>Abstraction: {{ patent.abstract }}</li>
+                                    <li>PCT Number: {{ patent.PCT_number }}</li>
+                                    <li>USPTO/EPO Status: {{ patent.status }}</li>
+                                </ol>
+
+                                <a type="button" class="btn btn-primary" href="{% url 'edit_patent' patent.id %}">
+                                    Edit
+                                </a>
+                                <a type="button" class="btn btn-primary" href="{% url 'delete_patent' patent.id %}">
+                                    Delete
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div id='insight' class='tab-pane fade'>
+                        {% for insight in insights %}
+                            <div class="single-patent">
+                                <div class="applicant">{{ insight.title }}</div>
+                                <div class="subtitle">Related Patent: {{ insight.patent.title_of_invention }}</div>
+                                <div class="time">{{ insight.create_date }}</div>
+
+                                <pre class="wrap">{{ insight.content }}</pre>
+
+                                <a type="button" class="btn red-btn" href="{% url 'edit_insight' insight.id %}">
+                                    Edit
+                                </a>
+                                <a type="button" class="btn red-btn" href="{% url 'delete_insight' insight.id %}">
+                                    Delete
+                                </a>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

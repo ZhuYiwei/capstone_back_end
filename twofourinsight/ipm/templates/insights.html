@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block section %}
+    <div class="container">
+        <div class="home">
+
+            <div class="form">
+                <form role="form" id="insight-search-form" action="{% url 'search_insight' %}" method="get">
+                    <label>Search Insight by Keyword
+                        <input name="keyword">
+                    </label>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+            </div>
+
+            <div class="small-container">
+                {% for insight in insights %}
+                    <div class="single-patent">
+                        <div class="applicant">{{ insight.title }}</div>
+                        <div class="subtitle">Related Patent: {{ insight.patent.title_of_invention }}</div>
+                        <div class="time">{{ insight.create_date }}</div>
+
+                        <pre class="wrap">{{ insight.content }}</pre>
+
+                        <a type="button" class="btn btn-primary" href="{% url 'edit_insight' insight.id %}">
+                            Edit
+                        </a>
+                        <a type="button" class="btn btn-primary" href="{% url 'delete_insight' insight.id %}">
+                            Delete
+                        </a>
+                    </div>
+                {% endfor %}
+
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
